@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 4.2)
+project(signals_emulator)
+
+set(CMAKE_CXX_STANDARD 23)
+
+add_library(signals_emulator STATIC src/library.h src/library.cpp)
+
+# Testing
+# Source: https://github.com/google/googletest/blob/main/googletest/README.md
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        # Specify the commit you depend on and update it regularly.
+        URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+)
+## For Windows: Prevent overriding the parent project's compiler/linker settings
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+enable_testing()
+
+# Now simply link against gtest or gtest_main as needed. Eg
+add_executable(my_example test/test1.cpp)
+target_link_libraries(my_example gtest_main)
