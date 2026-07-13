@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.31)
 project(signals_emulator)
 
 set(CMAKE_CXX_STANDARD 23)
