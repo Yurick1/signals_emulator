@@ -3,7 +3,10 @@ project(signals_emulator)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_library(signals_emulator STATIC src/library.h src/library.cpp)
+file(GLOB all_lib_sources "src/*")
+add_library(signals_emulator STATIC ${all_lib_sources}
+        src/const_generator.cpp
+        src/const_generator.h)
 
 # Testing
 # Source: https://github.com/google/googletest/blob/main/googletest/README.md
@@ -18,6 +21,11 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(my_example test/test1.cpp)
-target_link_libraries(my_example gtest_main)
+# GoogleTest run configurations for TDD
+file(GLOB all_test_files "test/*.cpp")
+
+# An IDE can insert here values automatically. Please remove them
+add_executable(all_tests ${all_test_files})
+
+# Link gtest lib to a test runners
+target_link_libraries(all_tests gtest_main)
