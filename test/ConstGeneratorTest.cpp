@@ -9,8 +9,8 @@ TEST(ConstantValueGeneratorTests, test)
 {
     // Given
     constexpr auto given_count = 100;
-    constexpr auto expected_value = 123;
-    auto generator = ConstGenerator(expected_value);
+    constexpr auto expected_val = 123;
+    auto generator = ConstGenerator(expected_val);
 
     // When
     auto actual_vec = std::vector<int>();
@@ -21,8 +21,8 @@ TEST(ConstantValueGeneratorTests, test)
 
     // Then
     EXPECT_EQ(given_count, actual_vec.size());
-    for (auto a: actual_vec)
+    for (auto actual_val: actual_vec)
     {
-        EXPECT_EQ(a, expected_value);
+        EXPECT_EQ(expected_val, actual_val);
     }
 }

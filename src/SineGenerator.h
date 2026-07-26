@@ -6,10 +6,12 @@
 #define SIGNALS_EMULATOR_SINE_GENERATOR_H
 #include "Generator.h"
 
-template <typename RESULT, typename ARG>
-class SineGenerator: public Generator<RESULT, ARG> {
+template<typename RESULT, typename ARG>
+class SineGenerator: public Generator<RESULT, ARG>
+{
 public:
     explicit SineGenerator();
+
     RESULT generate(ARG arg) override;
 };
 

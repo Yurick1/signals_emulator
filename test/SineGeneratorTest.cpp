@@ -22,8 +22,12 @@ TEST(SineGeneratorTests, test)
 
     // Then
     EXPECT_EQ(given_count, actual_map.size());
-    for (auto [arg, val]: actual_map)
-    {
-        EXPECT_EQ(val, std::sin(arg));
-    }
+
+    std::for_each(
+        actual_map.begin(), actual_map.end(),
+        [](auto const &it)
+        {
+            EXPECT_EQ(std::sin(it.first), it.second);
+        }
+    );
 }

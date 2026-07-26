@@ -6,11 +6,12 @@
 #define SIGNALS_EMULATOR_GENERATOR_H
 
 
-template <typename RESULT, typename ARG>
+template<typename RESULT, typename ARG>
 class Generator
 {
 public:
     virtual RESULT generate(ARG arg) = 0;
+
     virtual ~Generator() = default;
 };
 

@@ -7,11 +7,14 @@
 
 #include "Generator.h"
 
-template <typename T>
-class ConstGenerator: public Generator<T, T> {
+template<typename T>
+class ConstGenerator: public Generator<T, T>
+{
     const T value;
+
 public:
     explicit ConstGenerator(T value);
+
     T generate(T arg) override;
 };
 
