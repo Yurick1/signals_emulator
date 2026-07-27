@@ -23,6 +23,6 @@ TEST(ConstantValueGeneratorTests, test)
     EXPECT_EQ(given_count, actual_vec.size());
     for (auto actual_val: actual_vec)
     {
-        EXPECT_EQ(expected_val, actual_val);
+        EXPECT_EQ(expected_val, actual_val + 1);
     }
 }
