@@ -25,9 +25,9 @@ TEST(SineTests, shouldReturnSinusValues)
 
     std::for_each(
         actual_angle_to_value_map.begin(), actual_angle_to_value_map.end(),
-        [](auto const &it)
+        [](auto const &pair_it)
         {
-            EXPECT_EQ(std::sin(it.first), it.second);
+            EXPECT_EQ(std::sin(pair_it.first), pair_it.second);
         }
     );
 }
