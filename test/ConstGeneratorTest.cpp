@@ -3,20 +3,20 @@
 //
 
 #include "gtest/gtest.h"
-#include "../src/ConstGenerator.cpp"
+#include "../src/Const.cpp"
 
-TEST(ConstantValueGeneratorTests, test)
+TEST(ConstTests, shouldReturnTheSameValue)
 {
     // Given
     constexpr auto given_count = 100;
     constexpr auto expected_val = 123;
-    auto generator = ConstGenerator(expected_val);
+    auto graph = Const(expected_val);
 
     // When
     auto actual_vec = std::vector<int>();
     for (int i = 0; i < given_count; i++)
     {
-        actual_vec.push_back(generator.generate(i));
+        actual_vec.push_back(graph[i]);
     }
 
     // Then
