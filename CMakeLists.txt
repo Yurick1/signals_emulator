@@ -4,10 +4,7 @@ project(signals_emulator)
 set(CMAKE_CXX_STANDARD 23)
 
 file(GLOB all_lib_sources "src/*")
-add_library(signals_emulator STATIC ${all_lib_sources}
-        src/const_generator.cpp
-        src/const_generator.h
-)
+add_library(signals_emulator STATIC ${all_lib_sources})
 
 # Testing
 # Source: https://github.com/google/googletest/blob/main/googletest/README.md
