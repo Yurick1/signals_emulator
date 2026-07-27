@@ -10,6 +10,8 @@ class Generator
 {
     int frequency;
     double phase;
+    double amplitude;
+    double offset;
 
 public:
     explicit Generator();
@@ -17,6 +19,10 @@ public:
     void setFrequency(int f);
 
     void setPhase(double ph);
+
+    void setAmplitude(double a);
+
+    void setOffset(double o);
 
     T operator[](double angle) const;
 };
