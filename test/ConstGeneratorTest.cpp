@@ -21,8 +21,12 @@ TEST(ConstTests, shouldReturnTheSameValue)
 
     // Then
     EXPECT_EQ(given_count, actual_vec.size());
-    for (auto actual_val: actual_vec)
-    {
-        EXPECT_EQ(expected_val, actual_val);
-    }
+
+    std::for_each(
+        actual_vec.begin(), actual_vec.end(),
+        [expected_val](auto const &it)
+        {
+            EXPECT_EQ(expected_val, it);
+        }
+    );
 }
