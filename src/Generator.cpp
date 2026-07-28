@@ -12,50 +12,44 @@ Generator<T>::Generator(const int frequency, const double phase, const double am
 frequency(frequency), phase(phase), amplitude(amplitude), offset(offset) {}
 
 template<typename T>
-template<typename T_builder>
-Generator<T>::Builder<T_builder>::Builder():
+Generator<T>::Builder::Builder():
     frequency(DEFAULT_MULTIPLICATION_VALUE),
     phase(DEFAULT_ADDITION_VALUE),
     amplitude(DEFAULT_MULTIPLICATION_VALUE),
     offset(DEFAULT_ADDITION_VALUE) {}
 
 template<typename T>
-template<typename T_builder>
-Generator<T>::template Builder<T_builder> &Generator<T>::Builder<T_builder>::setFrequency(int f)
+Generator<T>::Builder &Generator<T>::Builder::setFrequency(int f)
 {
     this->frequency = f;
     return *this;
 }
 
 template<typename T>
-template<typename T_builder>
-Generator<T>::template Builder<T_builder> &Generator<T>::Builder<T_builder>::setPhase(double p)
+Generator<T>::Builder &Generator<T>::Builder::setPhase(double p)
 {
     this->phase = p;
     return *this;
 }
 
 template<typename T>
-template<typename T_builder>
-Generator<T>::template Builder<T_builder> &Generator<T>::Builder<T_builder>::setAmplitude(double a)
+Generator<T>::Builder &Generator<T>::Builder::setAmplitude(double a)
 {
     this->amplitude = a;
     return *this;
 }
 
 template<typename T>
-template<typename T_builder>
-Generator<T>::template Builder<T_builder> &Generator<T>::Builder<T_builder>::setOffset(double o)
+Generator<T>::Builder &Generator<T>::Builder::setOffset(double o)
 {
     this->offset = o;
     return *this;
 }
 
 template<typename T>
-template<typename T_builder>
-Generator<T_builder> *Generator<T>::Builder<T_builder>::build()
+Generator<T> *Generator<T>::Builder::build()
 {
-    return new Generator<T_builder>(frequency, phase, amplitude, offset);
+    return new Generator<T>(frequency, phase, amplitude, offset);
 }
 
 template<typename T>

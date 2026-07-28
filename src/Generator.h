@@ -16,7 +16,6 @@ class Generator
     explicit Generator(int frequency, double phase, double amplitude, double offset);
 
 public:
-    template<typename T_builder>
     class Builder
     {
         int frequency;
@@ -30,7 +29,7 @@ public:
         Builder &setPhase(double p);
         Builder &setAmplitude(double a);
         Builder &setOffset(double o);
-        Generator<T_builder> *build();
+        Generator *build();
     };
 
     T operator[](double angle) const;
