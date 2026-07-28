@@ -14,21 +14,22 @@ namespace
 {
     class GeneratorTests: public testing::TestWithParam<
                 std::tuple<
-                    std::string, std::function<void (int *)>, std::function<int (int, int *)>
+                    std::string,
+                    std::function<Generator<int> *(Generator<int>::Builder<int>, int *)>,
+                    std::function<int (int, int *)>
                 >
             > {};
 
+    constexpr auto expected_count = 100;
+    const auto value_changers = new int[]{2, 3, 4, 5};
     Generator<int> *generator = nullptr;
 }
 
 TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
 {
     // Given
-    constexpr auto expected_count = 100;
-    generator = new Generator<int>(); //TODO: move to before_each
-    const auto set = std::get<1>(GetParam());
-    const auto value_changers = new int[]{2, 3, 4, 5};
-    set(value_changers);
+    const auto build_generator = std::get<1>(GetParam());
+    generator = build_generator(Generator<int>::Builder<int>(), value_changers);
 
     // When
     auto actual_angle_to_value_map = std::map<int, int>();
@@ -51,7 +52,7 @@ TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
     free(generator); //TODO: move to tear_down
 }
 
-static void setupFunctionArgParameters(auto *gen, const int *values_to_set);
+static void setupFunctionArgParameters(Generator<int>::Builder<int> &gen_builder, const int *values_to_set);
 
 INSTANTIATE_TEST_SUITE_P(
     GeneratorTests,
@@ -59,7 +60,10 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::Values(
         std::make_tuple(
             "shouldRepeatValues",
-            [&]([[maybe_unused]]const int *values_to_set){},
+            [&](Generator<int>::Builder<int> builder, [[maybe_unused]]const int *values_to_set)
+            {
+                return builder.build();
+            },
             [](const int arg, [[maybe_unused]]const int *changers)
             {
                 return arg;
@@ -67,9 +71,10 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatValuesWithMultipliedFrequency",
-            [&](const int *values_to_set)
+            [&](Generator<int>::Builder<int> builder, const int *values_to_set)
             {
-                generator->setFrequency(values_to_set[FREQUENCY_PARAMETER]);
+                builder.setFrequency(values_to_set[FREQUENCY_PARAMETER]);
+                return builder.build();
             },
             [](const int arg, const int *changers)
             {
@@ -78,9 +83,10 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatValuesWithAddedPhase",
-            [&](const int *values_to_set)
+            [&](Generator<int>::Builder<int> builder, const int *values_to_set)
             {
-                generator->setPhase(values_to_set[PHASE_PARAMETER]);
+                builder.setPhase(values_to_set[PHASE_PARAMETER]);
+                return builder.build();
             },
             [](const int arg, const int *changers)
             {
@@ -89,10 +95,11 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatFunctionResultsWithMultipliedAmplitude",
-            [&](const int *values_to_set)
+            [&](Generator<int>::Builder<int> builder, const int *values_to_set)
             {
-                setupFunctionArgParameters(generator, values_to_set);
-                generator->setAmplitude(values_to_set[AMPLITUDE_PARAMETER]);
+                setupFunctionArgParameters(builder, values_to_set);
+                builder.setAmplitude(values_to_set[AMPLITUDE_PARAMETER]);
+                return builder.build();
             },
             [](const int arg, const int *changers)
             {
@@ -101,10 +108,11 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatFunctionResultsWithAddedOffset",
-            [&](const int *values_to_set)
+            [&](Generator<int>::Builder<int> builder, const int *values_to_set)
             {
-                setupFunctionArgParameters(generator, values_to_set);
-                generator->setOffset(values_to_set[OFFSET_PARAMETER]);
+                setupFunctionArgParameters(builder, values_to_set);
+                builder.setOffset(values_to_set[OFFSET_PARAMETER]);
+                return builder.build();
             },
             [](const int arg, const int *changers)
             {
@@ -114,8 +122,8 @@ INSTANTIATE_TEST_SUITE_P(
     )
 );
 
-static void setupFunctionArgParameters(auto *gen, const int *values_to_set)
+static void setupFunctionArgParameters(Generator<int>::Builder<int> &gen_builder, const int *values_to_set)
 {
-    gen->setFrequency(values_to_set[FREQUENCY_PARAMETER]);
-    gen->setPhase(values_to_set[PHASE_PARAMETER]);
+    gen_builder.setFrequency(values_to_set[FREQUENCY_PARAMETER]);
+    gen_builder.setPhase(values_to_set[PHASE_PARAMETER]);
 }
