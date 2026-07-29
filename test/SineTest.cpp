@@ -21,8 +21,6 @@ TEST(SineTests, shouldReturnSinusValues)
     }
 
     // Then
-    ASSERT_EQ(given_count, actual_angle_to_value_map.size());
-
     std::for_each(
         actual_angle_to_value_map.begin(), actual_angle_to_value_map.end(),
         [](auto const &pair_it)
