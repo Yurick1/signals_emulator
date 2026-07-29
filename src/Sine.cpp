@@ -10,7 +10,7 @@ template<typename T>
 Sine<T>::Sine() {}
 
 template<typename T>
-T Sine<T>::operator[](const double angle)
+T Sine<T>::operator[](const double time)
 {
-    return std::sin(angle);
+    return std::sin(time);
 }

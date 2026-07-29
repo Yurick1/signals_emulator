@@ -5,15 +5,15 @@
 #ifndef SIGNALS_EMULATOR_SINE_H
 #define SIGNALS_EMULATOR_SINE_H
 
-#include "Graph.h"
+#include "TimeGraph.h"
 
 template<typename T>
-class Sine: public Graph<T>
+class Sine: public TimeGraph<T>
 {
 public:
     explicit Sine();
 
-    T operator[](double angle) override;
+    T operator[](double time) override;
 };
 
 #endif //SIGNALS_EMULATOR_SINE_H
