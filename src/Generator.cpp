@@ -49,7 +49,7 @@ Generator<T>::Builder &Generator<T>::Builder::setOffset(double o)
 template<typename T>
 Generator<T> *Generator<T>::Builder::build()
 {
-    return new Generator<T>(frequency, phase, amplitude, offset);
+    return new Generator(frequency, phase, amplitude, offset);
 }
 
 template<typename T>
