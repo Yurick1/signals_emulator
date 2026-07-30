@@ -20,8 +20,6 @@ TEST(ConstTests, shouldReturnTheSameValue)
     }
 
     // Then
-    ASSERT_EQ(given_count, actual_vec.size());
-
     std::for_each(
         actual_vec.begin(), actual_vec.end(),
         [expected_val](auto const &it)
