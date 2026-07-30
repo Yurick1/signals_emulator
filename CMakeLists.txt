@@ -4,10 +4,7 @@ project(signals_emulator)
 set(CMAKE_CXX_STANDARD 23)
 
 file(GLOB all_lib_sources "src/*")
-add_library(signals_emulator STATIC ${all_lib_sources}
-        src/const_generator.cpp
-        src/const_generator.h
-)
+add_library(signals_emulator STATIC ${all_lib_sources})
 
 # Testing
 # Source: https://github.com/google/googletest/blob/main/googletest/README.md
@@ -25,7 +22,7 @@ enable_testing()
 # GoogleTest run configurations for TDD
 file(GLOB all_test_files "test/*.cpp")
 
-# An IDE can insert here values automatically. Please remove them
+# An IDE can insert here values automatically. Please remove them and check before a commit
 add_executable(all_tests ${all_test_files})
 
 # Link gtest lib to a test runners
