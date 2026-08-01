@@ -5,6 +5,8 @@
 #ifndef SIGNALS_EMULATOR_GENERATOR_H
 #define SIGNALS_EMULATOR_GENERATOR_H
 
+#include "TimeGraph.h"
+
 template<typename T>
 class Generator
 {
@@ -22,6 +24,7 @@ public:
         double phase;
         double amplitude;
         double offset;
+        TimeGraph<T> *graph;
 
     public:
         explicit Builder();
@@ -29,6 +32,7 @@ public:
         Builder &setPhase(double p);
         Builder &setAmplitude(double a);
         Builder &setOffset(double o);
+        Builder &setGraph(TimeGraph<T> *g);
         Generator *build();
     };
 

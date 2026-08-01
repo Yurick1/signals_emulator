@@ -23,6 +23,32 @@ namespace
     constexpr auto expected_count = 100;
     const auto value_changers = new int[]{2, 3, 4, 5};
     Generator<int> *generator = nullptr;
+
+    template<typename T>
+    class RepeaterTimeGraph: public TimeGraph<T>
+    {
+    public:
+        explicit RepeaterTimeGraph() {}
+
+        T operator[](double time) override
+        {
+            return time;
+        }
+
+    };
+}
+
+TEST(GeneratorTests, shouldThrowWhenTimePraphIsNull)
+{
+    //TODO
+
+    // Given
+
+    // When-Then
+    ASSERT_THROW([]
+    {
+        return Generator<int>::Builder().build();
+    }, std::invalid_argument);
 }
 
 TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
@@ -30,6 +56,7 @@ TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
     // Given
     const auto setupGeneratorBuilder = std::get<1>(GetParam());
     auto builder = Generator<int>::Builder();
+    builder.setGraph(new RepeaterTimeGraph<int>());
     setupGeneratorBuilder(builder, value_changers);
     generator = builder.build();
 
