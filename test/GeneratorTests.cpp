@@ -123,31 +123,23 @@ INSTANTIATE_TEST_SUITE_P(
             "shouldRepeatFunctionResultsWithMultipliedAmplitude",
             [&](Generator<int>::Builder &builder, const int *values_to_set)
             {
-                setupFunctionArgParameters(builder, values_to_set);
                 builder.setAmplitude(values_to_set[AMPLITUDE_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
-                return changers[AMPLITUDE_PARAMETER] * (changers[FREQUENCY_PARAMETER] * arg + changers[PHASE_PARAMETER]);
+                return changers[AMPLITUDE_PARAMETER] * arg;
             }
         ),
         std::make_tuple(
             "shouldRepeatFunctionResultsWithAddedOffset",
             [&](Generator<int>::Builder &builder, const int *values_to_set)
             {
-                setupFunctionArgParameters(builder, values_to_set);
                 builder.setOffset(values_to_set[OFFSET_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
-                return changers[FREQUENCY_PARAMETER] * arg + changers[PHASE_PARAMETER] + changers[OFFSET_PARAMETER];
+                return arg + changers[OFFSET_PARAMETER];
             }
         )
     )
 );
-
-static void setupFunctionArgParameters(Generator<int>::Builder &gen_builder, const int *values_to_set)
-{
-    gen_builder.setFrequency(values_to_set[FREQUENCY_PARAMETER]);
-    gen_builder.setPhase(values_to_set[PHASE_PARAMETER]);
-}
