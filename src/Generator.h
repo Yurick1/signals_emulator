@@ -40,6 +40,8 @@ public:
         Builder &setGraph(TimeGraph<T> *g);
 
         Generator *build();
+
+        ~Builder();
     };
 
     T operator[](double angle) const;

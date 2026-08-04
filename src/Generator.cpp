@@ -67,6 +67,12 @@ Generator<T> *Generator<T>::Builder::build()
 }
 
 template<typename T>
+Generator<T>::Builder::~Builder()
+{
+    delete this->graph;
+}
+
+template<typename T>
 T Generator<T>::operator[](const double angle) const
 {
     return amplitude * (frequency * angle + phase) + offset;

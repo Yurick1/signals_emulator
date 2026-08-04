@@ -15,13 +15,14 @@ namespace
     class GeneratorTests: public testing::TestWithParam<
                 std::tuple<
                     std::string,
-                    std::function<void (Generator<int>::Builder &, int *)>,
+                    std::function<void (Generator<int>::Builder *, int *)>,
                     std::function<int (int, int *)>
                 >
             > {};
 
     constexpr auto expected_count = 100;
     const auto value_changers = new int[]{2, 3, 4, 5};
+    Generator<int>::Builder *builder = nullptr;
     Generator<int> *generator = nullptr;
 
     template<typename T>
@@ -46,10 +47,10 @@ TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
 {
     // Given
     const auto setupGeneratorBuilder = std::get<1>(GetParam());
-    auto builder = Generator<int>::Builder();
-    builder.setGraph(new RepeaterTimeGraph<int>());
+    builder = new Generator<int>::Builder();
+    builder->setGraph(new RepeaterTimeGraph<int>());
     setupGeneratorBuilder(builder, value_changers);
-    generator = builder.build();
+    generator = builder->build();
 
     // When
     auto actual_angle_to_value_map = std::map<int, int>();
@@ -69,7 +70,9 @@ TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
             ASSERT_EQ(change_expected_value(pair.first, value_changers), pair.second);
         }
     );
-    free(generator); //TODO: move to tear_down
+
+    delete builder;
+    delete generator; //TODO: move to tear_down
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -78,19 +81,19 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::Values(
         std::make_tuple(
             "shouldRepeatValues",
-            [&](Generator<int>::Builder &builder, [[maybe_unused]]const int *values_to_set)
+            [](Generator<int>::Builder *builder, const int *values_to_set)
             {
             },
-            [](const int arg, [[maybe_unused]]const int *changers)
+            [](const int arg, const int *changers)
             {
                 return arg;
             }
         ),
         std::make_tuple(
             "shouldRepeatValuesWithMultipliedFrequency",
-            [&](Generator<int>::Builder &builder, const int *values_to_set)
+            [](Generator<int>::Builder *builder, const int *values_to_set)
             {
-                builder.setFrequency(values_to_set[FREQUENCY_PARAMETER]);
+                builder->setFrequency(values_to_set[FREQUENCY_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
@@ -99,9 +102,9 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatValuesWithAddedPhase",
-            [&](Generator<int>::Builder &builder, const int *values_to_set)
+            [](Generator<int>::Builder *builder, const int *values_to_set)
             {
-                builder.setPhase(values_to_set[PHASE_PARAMETER]);
+                builder->setPhase(values_to_set[PHASE_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
@@ -110,9 +113,9 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatFunctionResultsWithMultipliedAmplitude",
-            [&](Generator<int>::Builder &builder, const int *values_to_set)
+            [](Generator<int>::Builder *builder, const int *values_to_set)
             {
-                builder.setAmplitude(values_to_set[AMPLITUDE_PARAMETER]);
+                builder->setAmplitude(values_to_set[AMPLITUDE_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
@@ -121,9 +124,9 @@ INSTANTIATE_TEST_SUITE_P(
         ),
         std::make_tuple(
             "shouldRepeatFunctionResultsWithAddedOffset",
-            [&](Generator<int>::Builder &builder, const int *values_to_set)
+            [](Generator<int>::Builder *builder, const int *values_to_set)
             {
-                builder.setOffset(values_to_set[OFFSET_PARAMETER]);
+                builder->setOffset(values_to_set[OFFSET_PARAMETER]);
             },
             [](const int arg, const int *changers)
             {
