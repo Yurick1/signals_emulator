@@ -50,16 +50,16 @@ Generator<T>::Builder &Generator<T>::Builder::setOffset(double o)
 }
 
 template<typename T>
- Generator<T>::Builder & Generator<T>::Builder::setGraph(TimeGraph<T> *g)
+Generator<T>::Builder &Generator<T>::Builder::setGraph(TimeGraph<T> *g)
 {
-    this-> graph = g;
+    this->graph = g;
     return *this;
 }
 
 template<typename T>
 Generator<T> *Generator<T>::Builder::build()
 {
-    if (nullptr == this->graph)
+    if (!this->graph)
     {
         throw std::invalid_argument("Graph is null");
     }

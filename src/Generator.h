@@ -28,11 +28,17 @@ public:
 
     public:
         explicit Builder();
+
         Builder &setFrequency(int f);
+
         Builder &setPhase(double p);
+
         Builder &setAmplitude(double a);
+
         Builder &setOffset(double o);
+
         Builder &setGraph(TimeGraph<T> *g);
+
         Generator *build();
     };
 

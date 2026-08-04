@@ -34,21 +34,12 @@ namespace
         {
             return time;
         }
-
     };
 }
 
-TEST(GeneratorTests, shouldThrowWhenTimePraphIsNull)
+TEST(GeneratorTests, shouldThrowWhenTimeGraphIsNull)
 {
-    //TODO
-
-    // Given
-
-    // When-Then
-    ASSERT_THROW([]
-    {
-        return Generator<int>::Builder().build();
-    }, std::invalid_argument);
+    ASSERT_THROW(Generator<int>::Builder().build(), std::invalid_argument);
 }
 
 TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
@@ -80,8 +71,6 @@ TEST_P(GeneratorTests, sholdBeValueChangedByDifferentGeneratorParameters)
     );
     free(generator); //TODO: move to tear_down
 }
-
-static void setupFunctionArgParameters(Generator<int>::Builder &gen_builder, const int *values_to_set);
 
 INSTANTIATE_TEST_SUITE_P(
     GeneratorTests,
